@@ -11,12 +11,12 @@ b = 10*rand(N,1)-5;
 x_0 = 1+zeros(N,1);
 
 tol = 1e-14;
-maxiter = 100;
-restart = 200;
-max_restart = 200;
+maxiter = 1000;
+restart = 1000;
+max_restart = 2;
 
 [x_v1, res_v1, flag_v1] = gmres_v1(A,b, x_0, tol, maxiter);
-[x_v2, res_v2, flag_v2, iter] = gmres_v2(A,b, x_0, tol, restart, max_restart);
+[x_v2, res_v2, flag, iter] = gmres_v2(A,b, x_0, tol, restart, max_restart);
 %x_gmres = gmres(A, b, restart, tol, max_restart);
 
 %x_true = A\b;

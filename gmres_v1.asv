@@ -11,6 +11,7 @@ R = (A*V)'*V;
 Q = eye(1);
 b_norm = norm(b);
 g = beta;
+flag = 0;
 
 while (res/b_norm >= tol && m<=maxiter)
     
@@ -65,12 +66,13 @@ while (res/b_norm >= tol && m<=maxiter)
     g = g_new;
     g = G*g;
 
-    res =abs(g(end))
+    res =abs(g(end));
     m = m+1;
 end
+if
 
 y = R(1:end-1, :)\g(1:end-1); %TODO ASSICURARSI CHE CAPISCA CHE SIA TRIANGOLARE
-x = x_0 + V(:,*y;
+x = x_0 + V(:, 1:end-1)*y;
 
 end
 

@@ -1,5 +1,17 @@
-function [x, res, flag] = gmres_v1(A,b, x_0, tol, maxiter)
-%GMRES_V1 Summary of this function goes here
+function [x, res, flag, iter] = gmres_v2(A,b, x_0, tol, restart, max_restart)
+flag = 1;
+iter = 1;
+x = x_0;
+while iter<= max_restart && flag==1
+    [x, res, flag] = gmres_kernel(A,b, x, tol, restart);
+    iter = iter+1;
+end
+iter = iter-1;
+
+end
+
+function [x, res, flag] = gmres_kernel(A,b, x_0, tol, maxiter)
+%GMRES Summary of this function goes here
 %   Detailed explanation goes here
 n = length(A);
 r_0 = b-A*x_0; %starting residual
