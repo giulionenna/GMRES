@@ -13,7 +13,7 @@ b_norm = norm(b);
 g = beta;
 flag = 0;
 
-while (res/b_norm >= tol && m<=maxiter)
+while (res/b_norm >= tol && m-1<=maxiter)
     
     h = zeros(m+1, 1); %last column of current H_bar
     omega = A*V(:,end); %will be the new element of the basis

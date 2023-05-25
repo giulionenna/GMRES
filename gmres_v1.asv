@@ -1,4 +1,4 @@
-function [x, res] = gmres_v1(A,b, x_0, tol, maxiter)
+function [x, res, flag] = gmres_v1(A,b, x_0, tol, maxiter)
 %GMRES_V1 Summary of this function goes here
 %   Detailed explanation goes here
 n = length(A);
@@ -13,7 +13,7 @@ b_norm = norm(b);
 g = beta;
 flag = 0;
 
-while (res/b_norm >= tol && m<=maxiter)
+while (res/b_norm >= tol && m+1<=maxiter)
     
     h = zeros(m+1, 1); %last column of current H_bar
     omega = A*V(:,end); %will be the new element of the basis
@@ -69,7 +69,9 @@ while (res/b_norm >= tol && m<=maxiter)
     res =abs(g(end));
     m = m+1;
 end
-if
+if m >= maxiter
+    flag = 1;
+end
 
 y = R(1:end-1, :)\g(1:end-1); %TODO ASSICURARSI CHE CAPISCA CHE SIA TRIANGOLARE
 x = x_0 + V(:, 1:end-1)*y;
