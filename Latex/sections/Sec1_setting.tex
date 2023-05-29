@@ -1,0 +1,71 @@
+The prototype of constrained quadratic programming problem that we are dealing with is the following:
+\begin{linenomath}
+
+	%\begin{subequations}
+	\begin{align} 
+		\min_{\bm{x}\in \mathbb{R}^{n}} \quad  &\frac{1}{2}\bm{x}^\mathrm{T}\mathbf{Q}\bm{x} + \bm{c}^{\mathrm{T}}\bm{x} \label{Sec1_Eq_prb_mat} \\
+		\text{subject to}\quad & \mathbf{A}\bm{x} = \bm{b}, \nonumber\\
+		& \bm{x} \geq \bm{0},\nonumber
+	\end{align}  
+	%\end{subequations}
+\end{linenomath}
+Where \(\mathbf{Q}\in \mathbb{R}^{n \times n}\) is a symmetric positive semi-definite matrix, \(\bm{c}\in \mathbb{R}^n\), \(\mathbf{A}\in \mathbb{R}^{K \times n}\) and \(\bm{b} \in \mathbb{R}^K\) define \(K\) equality constraints. Problem \ref{Sec1_Eq_prb_mat} can be reformulated without equality constraints if we consider that:
+\begin{align}
+  \mathbf{A}\bm{x} = \bm{b} \iff \begin{cases}
+      \mathbf{A}\bm{x} \geq \bm{b},\\
+      \mathbf{A}\bm{x} \leq \bm{b}.
+  \end{cases}
+\end{align}
+Hence we can write a new problem, equivalent to \ref{Sec1_Eq_prb_mat}, in which there are only inequality constraints:
+\begin{linenomath}
+	%\begin{subequations}
+	\begin{align}
+		\min_{\bm{x}\in \mathbb{R}^{n}} \quad  &\frac{1}{2}\bm{x}^\mathrm{T}\mathbf{Q}\bm{x} + \bm{c}^{\mathrm{T}}\bm{x} \label{Sec2_Eq_yolo} \\
+		\text{subject to}\quad & \hat{\mathbf{A}}\bm{x} \geq \hat{\bm{b}}, \nonumber
+	\end{align}
+	%\end{subequations}
+\end{linenomath}
+%
+where $\hat{\mathbf{A}}\in \mathbb{R}^{(2K + n)\times n}$ and $\hat{\bm{b}}\in \mathbb{R}^{2K + n}$ are defined as
+\begin{align}
+	\hat{\mathbf{A}} = \begin{bmatrix}
+	    \mathbf{A} \\
+	    -\mathbf{A}\\
+	    \mathbf{I}_{n\times n}
+	\end{bmatrix}, \quad \quad  
+	\hat{\bm{b}} = \begin{bmatrix}
+	    \bm{b} \\
+	    -\bm{b}\\
+	    \bm{0}_{n}
+	\end{bmatrix}.
+	\label{Sec2_Eq_A_hat_B_hat}
+\end{align}
+We will solve the constraint quadratic programming problem as formulated in \ref{Sec2_Eq_yolo} since this formulation is valid both for problems with and without equality constraints.
+\\
+\\
+We can now define the corresponding Lagrangian function as:
+\begin{equation}
+	\mathcal{L}(\bm{x}, \bm{\lambda}) := \frac{1}{2}\bm{x}^\mathrm{T}\mathbf{Q}\bm{x} + \bm{c}^\mathrm{T}\bm{x} + \hat{\bm{\lambda}}^\mathrm{T}(\hat{\mathbf{A}}\bm{x}-\hat{\bm{b}})
+	\label{Sec1_Eq_lagrangian_B}
+\end{equation}
+where $\hat{\bm{\lambda}}\in\mathbb{R}^{2K+n}$ is the vector of Lagrangian multipliers associated with the inequality constraints and we can also write the corresponding KKT conditions:
+\begin{equation} 
+    \begin{cases} 
+		\mathbf{Q}\bm{x} + \bm{c} - \hat{\mathbf{A}}^\mathrm{T}\hat{\bm{\lambda}} = \bm{0} &\text{Stationarity condition,} \\
+		\hat{\mathbf{A}}\bm{x} - \hat{\bm{b}} \geq \bm{0} &\text{Primal feasibility,}\\
+		\hat{\bm{\lambda}} \geq \bm{0} &\text{Dual feasibility,}\\
+		\hat{\bm{\lambda}}^\mathrm{T}\left( \hat{\mathbf{A}}\bm{x} - \hat{\bm{b}}\right) = \bm{0} &\text{Complementary slackness condition.}
+	\end{cases}
+	\label{Sec1_Eq_kkt_before}
+\end{equation}
+We can manipulate the system \eqref{Sec1_Eq_kkt_before} in order to simplify the system of equations. In particular, we define a \textit{slack variable} $\bm{y} := \hat{\mathbf{A}}\bm{x} - \hat{\bm{b}} \in \mathbb{R}^{2K+n}$ such that the KKT conditions becomes
+\begin{equation} 
+    \begin{cases} 
+		\mathbf{Q}\bm{x} + \bm{c} - \hat{\mathbf{A}}^\mathrm{T}\hat{\bm{\lambda}} = \bm{0} &\text{Stationarity condition,} \\
+		\bm{y} \geq \bm{0} &\text{Primal feasibility,}\\
+		\hat{\bm{\lambda}} \geq \bm{0} &\text{Dual feasibility,}\\
+		\hat{\mathbf{A}}\bm{x} - \hat{\bm{b}} -\bm{y} = \bm{0} &\text{Slack variable constraint,}\\
+		\hat{\bm{\lambda}}^\mathrm{T}\bm{y} = \bm{0} &\text{Complementary slackness condition.}
+	\end{cases}
+	\label{Sec1_Eq_kkt_after}
+\end{equation}

@@ -35,8 +35,10 @@ for k = 1:kmax
                 Delta_augmented = gmres(K, rtilde, [], 1.0e-6, 20);
             elseif strcmp(gmres_mod, 'v1')
                 Delta_augmented = gmres_v1(K, rtilde, zeros(length(rtilde), 1), 1e-6, 20);
+            elseif strcmp(gmres_mod, 'none')
+                 Delta_augmented = K\rtilde;
             elseif strcmp(gmres_mod, 'lanczos')
-                Delta_augmented = d_lanczos(K, rtilde, zeros(length(rtilde), 1), 1e-6, 20);
+                 Delta_augmented = d_lanczos(K, rtilde, zeros(length(rtilde), 1), 1e-6, 20);
             end
 
             Delta_xk_aff = Delta_augmented(1:n, 1);
@@ -44,7 +46,20 @@ for k = 1:kmax
             
             Delta_yk_aff = r3./lambdak - Delta_lambdak_aff.*yk./lambdak;
         case 'substitution'
-            Delta_xk_aff = pcg((Q + A'*D*A),( r1 + A'*(r2.*lambdak./yk + r3./yk)), 1.0e-6);
+
+            if strcmp(gmres_mod, 'native')
+                Delta_xk_aff = pcg((Q + A'*D*A),( r1 + A'*(r2.*lambdak./yk + r3./yk)), 1.0e-6);
+            elseif strcmp(gmres_mod, 'v1')
+                 b_tmp=(r1 + A'*(r2.*lambdak./yk + r3./yk));
+                Delta_xk_aff = gmres_v1((Q + A'*D*A),b_tmp,  zeros(length(b_tmp), 1), 1e-6, 20);
+            elseif strcmp(gmres_mod, 'lanczos')
+                b_tmp=(r1 + A'*(r2.*lambdak./yk + r3./yk));
+                Delta_xk_aff = d_lanczos((Q + A'*D*A),b_tmp,  zeros(length(b_tmp), 1), 1e-6, 20);
+            elseif strcmp(gmres_mod, 'none')
+                b_tmp=(r1 + A'*(r2.*lambdak./yk + r3./yk));
+                Delta_xk_aff = (Q + A'*D*A)\b_tmp;
+            end
+
             Delta_lambdak_aff = r2.*lambdak./yk + r3./yk - (A*Delta_xk_aff).*lambdak./yk;
             Delta_yk_aff = r3./lambdak - Delta_lambdak_aff.*yk./lambdak;
     end
@@ -77,13 +92,36 @@ for k = 1:kmax
         case 'augmented'
             rtilde = [r1;r2 + r3./lambdak];
             
-            Delta_augmented = gmres(K, rtilde, [], 1.0e-6, 20);
+            if strcmp(gmres_mod, 'native')
+                Delta_augmented = gmres(K, rtilde, [], 1.0e-6, 20);
+            elseif strcmp(gmres_mod, 'v1')
+                Delta_augmented = gmres_v1(K, rtilde, zeros(length(rtilde), 1), 1e-6, 20);
+            elseif strcmp(gmres_mod,'lanczos')
+                Delta_augmented = d_lanczos(K, rtilde, zeros(length(rtilde), 1), 1e-6, 20);
+            elseif strcmp(gmres_mod, 'none')
+                 Delta_augmented = K\rtilde;                
+            end
+
+
             Delta_xk = Delta_augmented(1:n, 1);
             Delta_lambdak = Delta_augmented(n+1:end, 1);
             
             Delta_yk = r3./lambdak - Delta_lambdak.*yk./lambdak;
         case 'substitution'
-            Delta_xk = pcg((Q + A'*D*A),( r1 + A'*(r2.*lambdak./yk + r3./yk)), 1.0e-6);
+            
+            if strcmp(gmres_mod, 'native')
+                Delta_xk = pcg((Q + A'*D*A),( r1 + A'*(r2.*lambdak./yk + r3./yk)), 1.0e-6);
+            elseif strcmp(gmres_mod, 'v1')
+                b_tmp = (r1 + A'*(r2.*lambdak./yk + r3./yk));
+                Delta_xk = gmres_v1((Q + A'*D*A),b_tmp,  zeros(length(b_tmp), 1), 1e-6, 20);
+            elseif strcmp(gmres_mod, 'lanczos')
+               b_tmp = (r1 + A'*(r2.*lambdak./yk + r3./yk));
+                Delta_xk = d_lanczos((Q + A'*D*A),b_tmp,  zeros(length(b_tmp), 1), 1e-6, 20);
+            elseif strcmp(gmres_mod, 'none')
+                b_tmp = (r1 + A'*(r2.*lambdak./yk + r3./yk));
+                Delta_xk = (Q + A'*D*A)\b_tmp;
+            end
+            
             Delta_lambdak = r2.*lambdak./yk + r3./yk - (A*Delta_xk).*lambdak./yk;
             Delta_yk= r3./lambdak - Delta_lambdak.*yk./lambdak;
     end

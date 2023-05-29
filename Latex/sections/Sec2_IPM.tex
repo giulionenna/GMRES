@@ -1,0 +1,27 @@
+Let's implement a Predictor-Corrector Interior Point Method for finding the solutions of the system \eqref{Sec1_Eq_kkt_after}. We can rewrite the problem as finding the zeros of the function \(F\,: \mathbb{R}^{4K + 3n} \to \mathbb{R}^{4K + 3n}\)
+\begin{equation}
+    F(\bm{x}, \bm{y} ,\bm{\lambda}) = \begin{bmatrix}
+                        \mathbf{Q}\bm{x} + \bm{c} - \hat{\mathbf{A}}^\mathrm{T}\hat{\bm{\lambda}}\\
+                        \hat{\mathbf{A}}\bm{x} - \hat{\bm{b}} - \bm{y}\\
+                        \mathbf{Y}\hat{\mathbf{\Lambda}}\bm{e}
+                    \end{bmatrix} = \bm{0}
+                    \label{Sec2_Eq_F}
+    \end{equation}
+    with the inequality constraints $\bm{y} = \hat{\mathbf{A}}\bm{x} - \hat{\bm{b}} \geq \bm{0}$ and $\hat{\bm{\lambda}} \geq \bm{0}$, where we have defined
+    \[\mathbf{Y} = 	\begin{bmatrix}
+            y_1 & & \bm{0}\\
+            & \ddots & \\
+            \bm{0} && y_n
+            \end{bmatrix} \in\mathbb{R}^{(2K+n) \times (2K+n) }, \quad  
+            \hat{\mathbf{\Lambda}} = 	
+            \begin{bmatrix}
+            \hat{\lambda}_1 && \bm{0}\\
+            & \ddots & \\
+            \bm{0} & & \hat{\lambda}_n \\
+            \end{bmatrix} \in\mathbb{R}^{(2K+n)\times (2K+n)},\]
+    and $\bm{e} = [1, \dots, 1]^\mathrm{T} \in \mathbb{R}^{2K+n}$. Since we will solve Equation \eqref{Sec2_Eq_F} with the Newton method, we will need the Jacobian of \(F\), which is computed as
+    \[ \mathbf{J}_F = \begin{bmatrix}
+        \mathbf{Q} & \mathbf{0} & -\hat{\mathbf{A}}^\mathrm{T}\\
+        \hat{\mathbf{A}} & -\mathbf{I} & \mathbf{0} \\
+        \mathbf{0} & \hat{\mathbf{\Lambda}} &\mathbf{Y}
+        \end{bmatrix}.\]

@@ -7,8 +7,8 @@ format short
 fprintf("--------------Problem Initialization-----------\n");
 
 % Initialization of the problem dimensions
-n = 10^4;
-K = 200;
+n = 10^5;
+K = 100;
 
 % Definition of the non-convex quadratic objective function
 c = ones(n,1);
@@ -45,7 +45,7 @@ x0 = A\(b+y0); % <- least squares sense
 ls_method = 'augmented';
 %ls_method = 'substitution';
 
-gmres_mod = ['v1'];
+gmres_mod = ['v1' ..];
 
 fprintf("--------------Start IPM Predictor Corrector----\n");
 % Predictor-Corrector Interior Point Method
