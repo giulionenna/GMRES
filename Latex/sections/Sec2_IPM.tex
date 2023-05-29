@@ -19,9 +19,151 @@ Let's implement a Predictor-Corrector Interior Point Method for finding the solu
             & \ddots & \\
             \bm{0} & & \hat{\lambda}_n \\
             \end{bmatrix} \in\mathbb{R}^{(2K+n)\times (2K+n)},\]
-    and $\bm{e} = [1, \dots, 1]^\mathrm{T} \in \mathbb{R}^{2K+n}$. Since we will solve Equation \eqref{Sec2_Eq_F} with the Newton method, we will need the Jacobian of \(F\), which is computed as
+    and $\bm{e} = [1, \dots, 1]^\mathrm{T} \in \mathbb{R}^{2K+n}$. 
+\\
+\\
+\noindent The main idea about \textbf{Interior Point Methods} is that, given a starting point \((\bf{x}_0, \bf{y}_0, \bf{\lambda}_0)\), we want to stay away from the boundary of the feasible set for as many iterations as possible since getting stuck on the boundary in early iterations kills the convergence speed of the algorithm. What we want instead is for the solution to gently approach the boundary in order to maximize the convergence speed. \\
+This is accomplished in two main steps: the \textit{Predictor} step and the \textit{Corrector} step. In the Prediction step, given a current feasible solution \((\bf{x}_k, \bf{y}_k, \bf{\lambda}_k)\), we compute a simple \textit{Newton Step} to solve eq. \ref{Sec2_Eq_F}. We then estimate how far away we are from the feasible set and compute the \textit{Corrector} step which is simply a correction of the Newton step computed above needed to keep the boundary of the feasible set at a desired distance that will decrease during iterations.
+\\
+\\
+\noindent Since we will solve Equation \eqref{Sec2_Eq_F} with the Newton method, we will need the Jacobian of \(F\), which is computed as
     \[ \mathbf{J}_F = \begin{bmatrix}
         \mathbf{Q} & \mathbf{0} & -\hat{\mathbf{A}}^\mathrm{T}\\
         \hat{\mathbf{A}} & -\mathbf{I} & \mathbf{0} \\
         \mathbf{0} & \hat{\mathbf{\Lambda}} &\mathbf{Y}
         \end{bmatrix}.\]
+    The resulting Predictor-Corrector IPM algorithm is the following:
+    \begin{itemize}
+        \item We start from an initial point $(\bm{x}_0,\bm{y}_{0}, \hat{\bm{\lambda}}_{0})$ with the only request that $\bm{y}_0$ and $\hat{\bm{\lambda}}_0$ satisfy the primal and dual strict feasibility conditions, i.e. $\bm{y}_0, \hat{\bm{\lambda}}_0 > 0$, and we choose $\bm{x}_{0}$ which solves the condition $\hat{\mathbf{A}}\bm{x}_{0} - \hat{\bm{b}} -\bm{y}_{0} = \bm{0}$ in the \textit{least-square sense}.
+        \item (\textbf{Predictor}) At step $k$, using the current three iterates $(\bm{x}_k, \bm{y}_k, \hat{\bm{\lambda}}_k)$, we compute the affine scaling step $(\Delta\bm{x}_k^\mathrm{aff}, \Delta{\bm{y}}_k^\mathrm{aff},  \Delta\hat{\bm{\lambda}}_k^\mathrm{aff})$ using the following Newton step
+        \begin{equation} \label{Sec_2_Eq_NewtonStep1}
+        \begin{bmatrix}
+            \mathbf{Q} & \mathbf{0} & -\hat{\mathbf{A}}^\mathrm{T}\\
+            \hat{\mathbf{A}} & -\mathbf{I} & \mathbf{0} \\
+            \mathbf{0} & \hat{\mathbf{\Lambda}}_k &\mathbf{Y}_k
+            \end{bmatrix} 
+        \begin{bmatrix}
+            \Delta\bm{x}_k^\mathrm{aff} \\  \Delta\bm{y}_k^\mathrm{aff} \\
+            \Delta\hat{\bm{\lambda}}_k^\mathrm{aff}
+        \end{bmatrix} =
+        -\begin{bmatrix}
+            \mathbf{Q}\bm{x}_k + \bm{c} - \hat{\mathbf{A}}^\mathrm{T}\hat{\bm{\lambda}}_k\\
+            \hat{\mathbf{A}}\bm{x}_k - \hat{\bm{b}} - \bm{y}_k\\
+            \mathbf{Y}_k\hat{\mathbf{\Lambda}}_k\bm{e}
+        \end{bmatrix}
+    \end{equation}
+    %
+    where, again, we've defined $\mathbf{Y}_k = \mathrm{diag}\left( (\bm{y}_k)_1, \dots, (\bm{y}_k)_n\right)$ and $\hat{\mathbf{\Lambda}}_k = \mathrm{diag}( (\hat{\bm{\lambda}}_k)_1, \dots, (\hat{\bm{\lambda}}_k)_n)$.
+    \item We then compute the affine step-length $\alpha_{k}^\mathrm{aff}>0$ in order to remain in the internal part of the feasible set by ensuring that $\bm{y}_k + \alpha_{k}^\mathrm{aff}\Delta\bm{y}_k^\mathrm{aff}>0$ and $\hat{\bm{\lambda}}_k + \alpha_{k}^\mathrm{aff}\Delta\hat{\bm{\lambda}}_k^\mathrm{aff}>0$. This is accomplished by setting the step-length as
+    \begin{align}
+        \alpha_{k}^\mathrm{aff} = \min\left\{ 1, \, \min\left\{ -\frac{(\bm{y}_k)_i}{(\Delta\bm{y}_k^\mathrm{aff})_i} \, : \, i =1, \dots, 2K + n,\,\,\, (\Delta\bm{y}_k^\mathrm{aff})_i < 0\right\}\right.\nonumber\\
+        \min\left.\left\{ -\frac{(\hat{\bm{\lambda}}_k)_i}{(\Delta\hat{\bm{\lambda}}_k^\mathrm{aff})_i} \, : \,  i =1, \dots, 2K + n,\,\,\, (\Delta\hat{\bm{\lambda}}_k^\mathrm{aff})_i < 0\right\}    \right\}
+    \end{align}
+    \item We compute the affine complementarity measure $\mu_{k}^\mathrm{aff}$ and the complementarity parameter $\sigma_k$ as
+    %
+    \begin{linenomath}
+        %\begin{subequations}
+        \begin{align}
+            \mu_{k}^\mathrm{aff} &= \frac{1}{n}\left(\bm{y}_k + \alpha_{k}^\mathrm{aff}\Delta\bm{y}_k^\mathrm{aff} \right)^\mathrm{T}\left(\hat{\bm{\lambda}}_k + \alpha_{k}^\mathrm{aff}\Delta\hat{\bm{\lambda}}_k^\mathrm{aff} \right)\\
+            \sigma_k &= \left(\frac{\mu_{k}^\mathrm{aff}}{\mu_k}\right)^3,\quad\mu_k = \frac{\bm{y}_k^\mathrm{T}\hat{\bm{\lambda}}_k}{n}
+        \end{align}
+        %\end{subequations}
+    \end{linenomath}
+    Those are the measures that tell us "how far" we are from the boundary of the feasible set.
+    \item (\textbf{Corrector}) We compute the affine corrector step $(\Delta\bm{x}_k, \Delta\bm{\lambda}_k,\Delta\bm{s}_k)$ using the following Newton step
+    \begin{equation} 
+    \begin{bmatrix}
+            \mathbf{Q} & \mathbf{0} & -\hat{\mathbf{A}}^\mathrm{T}\\
+            \hat{\mathbf{A}} & -\mathbf{I} & \mathbf{0} \\
+            \mathbf{0} & \hat{\mathbf{\Lambda}}_k &\mathbf{Y}_k
+        \end{bmatrix} 
+        \begin{bmatrix}
+            \Delta\bm{x}_k \\ 
+            \Delta\bm{y}_k \\
+            \Delta\hat{\bm{\lambda}}_k
+        \end{bmatrix} =
+        -\begin{bmatrix}
+            \mathbf{Q}\bm{x}_k + \bm{c} - \hat{\mathbf{A}}^\mathrm{T}\hat{\bm{\lambda}}_k\\
+            \hat{\mathbf{A}}\bm{x}_k - \hat{\bm{b}} - \bm{y}_k\\
+            \mathbf{Y}_k\hat{\mathbf{\Lambda}}_k\bm{e}
+        \end{bmatrix}+ 
+        \begin{bmatrix}
+            \bm{0} \\
+            \bm{0} \\
+            -\Delta\mathbf{Y}_{k}^\mathrm{aff}\Delta\hat{\mathbf{\Lambda}}_{k}^\mathrm{aff}\bm{e} + \sigma_{k}\mu_{k}\bm{e}
+        \end{bmatrix}
+        \label{Sec_2_Eq_kekmanet}
+    \end{equation}
+    %
+    where $\Delta\mathbf{Y}_k = \mathrm{diag}\left( (\Delta\bm{y}_k)_1, \dots, (\Delta\bm{y}_k)_n\right)$ and $\Delta\hat{\mathbf{\Lambda}}_k = \mathrm{diag}( (\Delta\hat{\bm{\lambda}}_k)_1, \dots, (\Delta\hat{\bm{\lambda}}_k)_n)$.
+    \item We then compute the step-length  $\alpha_{k}>0$ as before
+    \begin{align}
+        \alpha_{k} = \min\left\{ 1, \, \min\left\{ -\frac{\tau_k(\bm{y}_k)_i}{(\Delta\bm{y}_k)_i} \, : \, i =1, \dots, n,\,\,\, (\Delta\bm{y}_k)_i < 0\right\}\right.\nonumber\\
+        \min\left.\left\{ -\frac{\tau_k(\hat{\bm{\lambda}}_k)_i}{(\Delta\hat{\bm{\lambda}}_k)_i} \, : \,  i =1, \dots, n,\,\,\, (\Delta\hat{\bm{\lambda}}_k)_i < 0\right\}    \right\}
+        \label{Sec3_eq_tau}
+    \end{align}
+    where $\tau_k\in(0,1)$ controls how far we back off from the maximum step for which the inequality constraints are satisfied, i.e. $\bm{y}_k + \alpha_{k}\Delta\bm{y}_k\geq(1-\tau_k)\bm{y}_k$ and  $\hat{\bm{\lambda}}_k + \alpha_{k}\Delta\hat{\bm{\lambda}}_k\geq(1-\tau_k)\hat{\bm{\lambda}}_k$.
+    \item (\textbf{Update}) We then update the values for the next iteration:
+    \begin{align}
+    \begin{cases}
+        \bm{x}_{k+1} = \bm{x}_{k} + \alpha_{k}\Delta\bm{x}_k,\\
+        \bm{y}_{k+1} = \bm{y}_{k} + \alpha_{k}\Delta\bm{y}_k,\\
+        \hat{\bm{\lambda}}_{k+1} = \hat{\bm{\lambda}}_{k} + \alpha_{k}\Delta\hat{\bm{\lambda}}_k.
+    \end{cases}\label{Sec3_Eq_sugoma}
+    \end{align}
+\end{itemize}
+
+\subsection{Solution of the linear system}
+At each step of the algorithm, we have to solve the linear system
+\begin{equation} \label{Sec_2_Eq_NewtonStep}
+    \begin{bmatrix}
+        \mathbf{Q} & \mathbf{0} & -\hat{\mathbf{A}}^\mathrm{T}\\
+        \hat{\mathbf{A}} & -\mathbf{I} & \mathbf{0} \\
+        \mathbf{0} & \hat{\mathbf{\Lambda}}_k &\mathbf{Y}_k
+    \end{bmatrix} 
+    \begin{bmatrix}
+        \Delta \bm{x} \\ \Delta \bm{y} \\ \Delta \hat{\bm{\lambda}} 
+    \end{bmatrix} =
+    \begin{bmatrix}
+        \bm{r}_1 \\ \bm{r}_2 \\ \bm{r}_3
+    \end{bmatrix}.
+\end{equation}
+%
+Since the dimension of this linear system is very large, we need to split the equations in order to make the problem more manageable. From the third set of equations we get
+\begin{equation} \label{Sec_2_eq_pio}
+    \Delta \bm{y} = \hat{\mathbf{\Lambda}}^{-1} \bm{r}_3 -  \mathbf{D}^{-1}\Delta \hat{\bm{\lambda}}.
+\end{equation}
+where $\mathbf{D} = \mathbf{Y}^{-1}\hat{\mathbf{\Lambda}}$.
+So, substituting \ref{Sec_2_eq_pio} into \ref{Sec_2_Eq_NewtonStep}, we obtain the following augmented system:
+\begin{equation} \tag{Aug}\label{sec2_eq_augmented}
+    \begin{bmatrix}
+            \mathbf{Q} & -\hat{\mathbf{A}}^\mathrm{T} \\
+            \hat{\mathbf{A}} & \mathbf{D}^{-1}
+        \end{bmatrix}
+        \begin{bmatrix}
+            \Delta \bm{x}\\ \Delta \hat{\bm{\lambda}}
+        \end{bmatrix} = 
+        \begin{bmatrix}
+            \bm{r}_1 \\ \bm{r}_2 + \hat{\mathbf{\Lambda}}^{-1}\bm{r}_3
+        \end{bmatrix}.
+\end{equation}
+Moreover, we can exploit the new formulation to solve the system just by substitution. Indeed, if we apply $\mathbf{D}$ to the second equation, we get 
+\begin{equation}
+    \Delta \hat{\bm{\lambda}} = \mathbf{D}\left( \bm{r}_2 + \hat{\mathbf{\Lambda}}^{-1}\bm{r}_3 - \hat{\mathbf{A}}\Delta \bm{x} \right), \label{Sec3_Eq_antisemitismo}
+\end{equation}
+and, if we substitute back in the first equation of \eqref{sec2_eq_augmented}, we obtain the final system
+\begin{align}
+    \Delta \bm{x} &= \left( \mathbf{Q} + \hat{\mathbf{A}}^\mathrm{T}\mathbf{D}\hat{\mathbf{A}}\right)^{-1}\left( \bm{r}_1 + \hat{\mathbf{A}}^\mathrm{T}\mathbf{D}\left( \bm{r}_2 + \hat{\mathbf{\Lambda}}^{-1}\bm{r}_3 \right)\right) \nonumber\\
+    &= \left( \mathbf{Q} + \hat{\mathbf{A}}^\mathrm{T}\mathbf{D}\hat{\mathbf{A}}\right)^{-1}\left( \bm{r}_1 + \hat{\mathbf{A}}^\mathrm{T}\left( \mathbf{D}\bm{r}_2 + \mathbf{Y}^{-1}\bm{r}_3 \right)\right). \label{Sec3_eq_byandlarge}
+\end{align}
+In \eqref{Sec3_eq_byandlarge} the matrix of the linear system is symmetric and positive semi-definite since $\mathbf{Q}$ and $\mathbf{D}$ are symmetric and positive semi-definite \footnote{$\mathbf{D} = \mathbf{Y}^{-1}\hat{\mathbf{\Lambda}}$ is indeed SPD because, by the primal and dual feasibility conditions, $y_k > 0$ and $\hat{\lambda}_k > 0$.}, so we will use the \texttt{pcg} solver.
+To summarize, this approach solves the system by solving for $\Delta \bm{x}$ and then by substitution in the other two equations as presented in the following system:
+\begin{equation}
+    \begin{cases}
+        \Delta \bm{x} &= \left( \mathbf{Q} + \hat{\mathbf{A}}^\mathrm{T}\mathbf{D}\hat{\mathbf{A}}\right)^{-1}\left( \bm{r}_1 + \hat{\mathbf{A}}^\mathrm{T}\left( \mathbf{D}\bm{r}_2 + \mathbf{Y}^{-1}\bm{r}_3 \right)\right),\\
+        \Delta \hat{\bm{\lambda}} &= \mathbf{D}\left( \bm{r}_2 + \hat{\mathbf{\Lambda}}^{-1}\bm{r}_3 - \hat{\mathbf{A}}\Delta \bm{x} \right),\\
+        \Delta \bm{y} &= \hat{\mathbf{\Lambda}}^{-1} \bm{r}_3 -  \mathbf{D}^{-1}\Delta \hat{\bm{\lambda}}.
+    \end{cases}
+    \tag{Sus}
+    \label{Sec2_Ee_SUS}
+\end{equation}

@@ -1,0 +1,504 @@
+--------------Problem Initialization-----------
+Running with params:
+	 ls_method: 	 augmented 
+	 gmres_mod: 	 v1 
+	 K: 			 100 
+	 n: 			 10^3 
+--------------Start IPM Predictor Corrector----
+--------------End IPM Predictor Corrector------
+Time elapsed						=	1.044e-01 sec 
+--------------KKT condtion errors--------------
+ Stationarity (2)					=	5.327e-02
+ Stationarity (inf)					=	1.110e-01
+ Primal Feasibility Equality (2)	=	1.717e-02
+ Primal Feasibility Equality (inf)	=	4.932e-03
+ Primal Feasibility Inequality		=	0
+ Dual Feasibility Inequality		=	0
+ Complementary Slackness (max)		=	6.315e-09
+ Complementary Slackness (prd)		=	8.198e-08
+
+
+
+--------------Problem Initialization-----------
+Running with params:
+	 ls_method: 	 augmented 
+	 gmres_mod: 	 v1 
+	 K: 			 100 
+	 n: 			 10^4 
+--------------Start IPM Predictor Corrector----
+--------------End IPM Predictor Corrector------
+Time elapsed						=	4.398e-01 sec 
+--------------KKT condtion errors--------------
+ Stationarity (2)					=	1.042e-03
+ Stationarity (inf)					=	2.255e-03
+ Primal Feasibility Equality (2)	=	4.310e-03
+ Primal Feasibility Equality (inf)	=	2.889e-03
+ Primal Feasibility Inequality		=	0
+ Dual Feasibility Inequality		=	0
+ Complementary Slackness (max)		=	3.490e-08
+ Complementary Slackness (prd)		=	1.677e-06
+
+
+
+--------------Problem Initialization-----------
+Running with params:
+	 ls_method: 	 augmented 
+	 gmres_mod: 	 v1 
+	 K: 			 100 
+	 n: 			 10^5 
+--------------Start IPM Predictor Corrector----
+--------------End IPM Predictor Corrector------
+Time elapsed						=	2.965e+00 sec 
+--------------KKT condtion errors--------------
+ Stationarity (2)					=	5.127e-03
+ Stationarity (inf)					=	9.918e-03
+ Primal Feasibility Equality (2)	=	3.164e-01
+ Primal Feasibility Equality (inf)	=	7.860e-03
+ Primal Feasibility Inequality		=	0
+ Dual Feasibility Inequality		=	0
+ Complementary Slackness (max)		=	4.558e-08
+ Complementary Slackness (prd)		=	1.022e-04
+
+
+
+--------------Problem Initialization-----------
+Running with params:
+	 ls_method: 	 augmented 
+	 gmres_mod: 	 v1 
+	 K: 			 500 
+	 n: 			 10^3 
+--------------Start IPM Predictor Corrector----
+--------------End IPM Predictor Corrector------
+Time elapsed						=	2.628e-02 sec 
+--------------KKT condtion errors--------------
+ Stationarity (2)					=	4.532e-02
+ Stationarity (inf)					=	9.127e-02
+ Primal Feasibility Equality (2)	=	1.937e-02
+ Primal Feasibility Equality (inf)	=	4.024e-03
+ Primal Feasibility Inequality		=	0
+ Dual Feasibility Inequality		=	0
+ Complementary Slackness (max)		=	4.778e-10
+ Complementary Slackness (prd)		=	4.052e-09
+
+
+
+--------------Problem Initialization-----------
+Running with params:
+	 ls_method: 	 augmented 
+	 gmres_mod: 	 v1 
+	 K: 			 500 
+	 n: 			 10^4 
+--------------Start IPM Predictor Corrector----
+--------------End IPM Predictor Corrector------
+Time elapsed						=	2.602e-01 sec 
+--------------KKT condtion errors--------------
+ Stationarity (2)					=	1.204e-02
+ Stationarity (inf)					=	2.083e-02
+ Primal Feasibility Equality (2)	=	3.926e-02
+ Primal Feasibility Equality (inf)	=	2.745e-02
+ Primal Feasibility Inequality		=	0
+ Dual Feasibility Inequality		=	0
+ Complementary Slackness (max)		=	1.250e-06
+ Complementary Slackness (prd)		=	1.260e-05
+
+
+
+--------------Problem Initialization-----------
+Running with params:
+	 ls_method: 	 augmented 
+	 gmres_mod: 	 v1 
+	 K: 			 500 
+	 n: 			 10^5 
+--------------Start IPM Predictor Corrector----
+--------------End IPM Predictor Corrector------
+Time elapsed						=	1.229e+01 sec 
+--------------KKT condtion errors--------------
+ Stationarity (2)					=	6.168e-04
+ Stationarity (inf)					=	2.267e-03
+ Primal Feasibility Equality (2)	=	1.459e-03
+ Primal Feasibility Equality (inf)	=	1.102e-03
+ Primal Feasibility Inequality		=	0
+ Dual Feasibility Inequality		=	0
+ Complementary Slackness (max)		=	1.996e-08
+ Complementary Slackness (prd)		=	9.421e-06
+
+
+
+--------------Problem Initialization-----------
+Running with params:
+	 ls_method: 	 augmented 
+	 gmres_mod: 	 native 
+	 K: 			 100 
+	 n: 			 10^3 
+--------------Start IPM Predictor Corrector----
+--------------End IPM Predictor Corrector------
+Time elapsed						=	2.583e-01 sec 
+--------------KKT condtion errors--------------
+ Stationarity (2)					=	2.951e-02
+ Stationarity (inf)					=	6.145e-02
+ Primal Feasibility Equality (2)	=	6.036e-01
+ Primal Feasibility Equality (inf)	=	1.228e-01
+ Primal Feasibility Inequality		=	0
+ Dual Feasibility Inequality		=	0
+ Complementary Slackness (max)		=	1.392e-08
+ Complementary Slackness (prd)		=	4.536e-07
+
+
+
+--------------Problem Initialization-----------
+Running with params:
+	 ls_method: 	 augmented 
+	 gmres_mod: 	 native 
+	 K: 			 100 
+	 n: 			 10^4 
+--------------Start IPM Predictor Corrector----
+--------------End IPM Predictor Corrector------
+Time elapsed						=	5.617e-01 sec 
+--------------KKT condtion errors--------------
+ Stationarity (2)					=	2.889e-03
+ Stationarity (inf)					=	5.858e-03
+ Primal Feasibility Equality (2)	=	2.630e-03
+ Primal Feasibility Equality (inf)	=	3.478e-04
+ Primal Feasibility Inequality		=	0
+ Dual Feasibility Inequality		=	0
+ Complementary Slackness (max)		=	1.036e-10
+ Complementary Slackness (prd)		=	2.778e-08
+
+
+
+--------------Problem Initialization-----------
+Running with params:
+	 ls_method: 	 augmented 
+	 gmres_mod: 	 native 
+	 K: 			 100 
+	 n: 			 10^5 
+--------------Start IPM Predictor Corrector----
+--------------End IPM Predictor Corrector------
+Time elapsed						=	1.663e+00 sec 
+--------------KKT condtion errors--------------
+ Stationarity (2)					=	1.720e-03
+ Stationarity (inf)					=	6.118e-03
+ Primal Feasibility Equality (2)	=	3.163e-01
+ Primal Feasibility Equality (inf)	=	6.073e-03
+ Primal Feasibility Inequality		=	0
+ Dual Feasibility Inequality		=	0
+ Complementary Slackness (max)		=	1.228e-09
+ Complementary Slackness (prd)		=	2.835e-06
+
+
+
+--------------Problem Initialization-----------
+Running with params:
+	 ls_method: 	 augmented 
+	 gmres_mod: 	 native 
+	 K: 			 500 
+	 n: 			 10^3 
+--------------Start IPM Predictor Corrector----
+--------------End IPM Predictor Corrector------
+Time elapsed						=	4.279e-02 sec 
+--------------KKT condtion errors--------------
+ Stationarity (2)					=	3.666e-02
+ Stationarity (inf)					=	8.498e-02
+ Primal Feasibility Equality (2)	=	3.853e-02
+ Primal Feasibility Equality (inf)	=	1.017e-02
+ Primal Feasibility Inequality		=	0
+ Dual Feasibility Inequality		=	0
+ Complementary Slackness (max)		=	3.849e-07
+ Complementary Slackness (prd)		=	2.982e-06
+
+
+
+--------------Problem Initialization-----------
+Running with params:
+	 ls_method: 	 augmented 
+	 gmres_mod: 	 native 
+	 K: 			 500 
+	 n: 			 10^4 
+--------------Start IPM Predictor Corrector----
+--------------End IPM Predictor Corrector------
+Time elapsed						=	1.191e+00 sec 
+--------------KKT condtion errors--------------
+ Stationarity (2)					=	1.389e-01
+ Stationarity (inf)					=	3.282e-01
+ Primal Feasibility Equality (2)	=	7.409e-01
+ Primal Feasibility Equality (inf)	=	4.199e-01
+ Primal Feasibility Inequality		=	0
+ Dual Feasibility Inequality		=	0
+ Complementary Slackness (max)		=	5.129e-11
+ Complementary Slackness (prd)		=	7.438e-08
+
+
+
+--------------Problem Initialization-----------
+Running with params:
+	 ls_method: 	 augmented 
+	 gmres_mod: 	 native 
+	 K: 			 500 
+	 n: 			 10^5 
+--------------Start IPM Predictor Corrector----
+--------------End IPM Predictor Corrector------
+Time elapsed						=	1.318e+01 sec 
+--------------KKT condtion errors--------------
+ Stationarity (2)					=	6.167e-03
+ Stationarity (inf)					=	1.626e-02
+ Primal Feasibility Equality (2)	=	5.975e-02
+ Primal Feasibility Equality (inf)	=	4.427e-02
+ Primal Feasibility Inequality		=	0
+ Dual Feasibility Inequality		=	0
+ Complementary Slackness (max)		=	7.439e-11
+ Complementary Slackness (prd)		=	3.007e-07
+
+
+
+--------------Problem Initialization-----------
+Running with params:
+	 ls_method: 	 substitution 
+	 gmres_mod: 	 v1 
+	 K: 			 100 
+	 n: 			 10^3 
+--------------Start IPM Predictor Corrector----
+--------------End IPM Predictor Corrector------
+Time elapsed						=	2.383e-02 sec 
+--------------KKT condtion errors--------------
+ Stationarity (2)					=	2.107e-03
+ Stationarity (inf)					=	5.094e-03
+ Primal Feasibility Equality (2)	=	3.287e-09
+ Primal Feasibility Equality (inf)	=	1.507e-10
+ Primal Feasibility Inequality		=	0
+ Dual Feasibility Inequality		=	0
+ Complementary Slackness (max)		=	1.319e-05
+ Complementary Slackness (prd)		=	4.847e-05
+
+
+
+--------------Problem Initialization-----------
+Running with params:
+	 ls_method: 	 substitution 
+	 gmres_mod: 	 v1 
+	 K: 			 100 
+	 n: 			 10^4 
+--------------Start IPM Predictor Corrector----
+--------------End IPM Predictor Corrector------
+Time elapsed						=	3.836e+00 sec 
+--------------KKT condtion errors--------------
+ Stationarity (2)					=	4.778e+11
+ Stationarity (inf)					=	8.372e+12
+ Primal Feasibility Equality (2)	=	8.009e-15
+ Primal Feasibility Equality (inf)	=	4.441e-16
+ Primal Feasibility Inequality		=	0
+ Dual Feasibility Inequality		=	0
+ Complementary Slackness (max)		=	9.365e-06
+ Complementary Slackness (prd)		=	3.800e-05
+
+
+
+--------------Problem Initialization-----------
+Running with params:
+	 ls_method: 	 substitution 
+	 gmres_mod: 	 v1 
+	 K: 			 100 
+	 n: 			 10^5 
+--------------Start IPM Predictor Corrector----
+--------------End IPM Predictor Corrector------
+Time elapsed						=	2.408e+01 sec 
+--------------KKT condtion errors--------------
+ Stationarity (2)					=	1.008e-04
+ Stationarity (inf)					=	1.611e-04
+ Primal Feasibility Equality (2)	=	3.794e-10
+ Primal Feasibility Equality (inf)	=	1.808e-12
+ Primal Feasibility Inequality		=	0
+ Dual Feasibility Inequality		=	0
+ Complementary Slackness (max)		=	5.692e-08
+ Complementary Slackness (prd)		=	3.488e-06
+
+
+
+--------------Problem Initialization-----------
+Running with params:
+	 ls_method: 	 substitution 
+	 gmres_mod: 	 v1 
+	 K: 			 500 
+	 n: 			 10^3 
+--------------Start IPM Predictor Corrector----
+--------------End IPM Predictor Corrector------
+Time elapsed						=	1.351e-02 sec 
+--------------KKT condtion errors--------------
+ Stationarity (2)					=	3.131e-03
+ Stationarity (inf)					=	1.738e-02
+ Primal Feasibility Equality (2)	=	1.263e-09
+ Primal Feasibility Equality (inf)	=	4.376e-11
+ Primal Feasibility Inequality		=	0
+ Dual Feasibility Inequality		=	0
+ Complementary Slackness (max)		=	5.854e-07
+ Complementary Slackness (prd)		=	2.327e-06
+
+
+
+--------------Problem Initialization-----------
+Running with params:
+	 ls_method: 	 substitution 
+	 gmres_mod: 	 v1 
+	 K: 			 500 
+	 n: 			 10^4 
+--------------Start IPM Predictor Corrector----
+--------------End IPM Predictor Corrector------
+Time elapsed						=	1.407e+00 sec 
+--------------KKT condtion errors--------------
+ Stationarity (2)					=	2.387e+12
+ Stationarity (inf)					=	3.317e+13
+ Primal Feasibility Equality (2)	=	2.881e-15
+ Primal Feasibility Equality (inf)	=	2.369e-16
+ Primal Feasibility Inequality		=	0
+ Dual Feasibility Inequality		=	0
+ Complementary Slackness (max)		=	2.577e-04
+ Complementary Slackness (prd)		=	8.364e-03
+
+
+
+--------------Problem Initialization-----------
+Running with params:
+	 ls_method: 	 substitution 
+	 gmres_mod: 	 v1 
+	 K: 			 500 
+	 n: 			 10^5 
+--------------Start IPM Predictor Corrector----
+--------------End IPM Predictor Corrector------
+Time elapsed						=	5.601e+00 sec 
+--------------KKT condtion errors--------------
+ Stationarity (2)					=	2.519e-04
+ Stationarity (inf)					=	5.877e-04
+ Primal Feasibility Equality (2)	=	3.061e-11
+ Primal Feasibility Equality (inf)	=	1.481e-13
+ Primal Feasibility Inequality		=	0
+ Dual Feasibility Inequality		=	0
+ Complementary Slackness (max)		=	1.054e-08
+ Complementary Slackness (prd)		=	1.573e-07
+
+
+
+--------------Problem Initialization-----------
+Running with params:
+	 ls_method: 	 substitution 
+	 gmres_mod: 	 native 
+	 K: 			 100 
+	 n: 			 10^3 
+--------------Start IPM Predictor Corrector----
+--------------End IPM Predictor Corrector------
+Time elapsed						=	3.873e-02 sec 
+--------------KKT condtion errors--------------
+ Stationarity (2)					=	2.361e-03
+ Stationarity (inf)					=	7.757e-03
+ Primal Feasibility Equality (2)	=	1.982e-13
+ Primal Feasibility Equality (inf)	=	9.348e-15
+ Primal Feasibility Inequality		=	0
+ Dual Feasibility Inequality		=	0
+ Complementary Slackness (max)		=	1.142e-09
+ Complementary Slackness (prd)		=	5.345e-09
+
+
+
+--------------Problem Initialization-----------
+Running with params:
+	 ls_method: 	 substitution 
+	 gmres_mod: 	 native 
+	 K: 			 100 
+	 n: 			 10^4 
+--------------Start IPM Predictor Corrector----
+--------------End IPM Predictor Corrector------
+Time elapsed						=	4.592e+00 sec 
+--------------KKT condtion errors--------------
+ Stationarity (2)					=	8.293e+10
+ Stationarity (inf)					=	1.339e+12
+ Primal Feasibility Equality (2)	=	3.019e-15
+ Primal Feasibility Equality (inf)	=	2.728e-16
+ Primal Feasibility Inequality		=	0
+ Dual Feasibility Inequality		=	0
+ Complementary Slackness (max)		=	1.987e-06
+ Complementary Slackness (prd)		=	2.421e-05
+
+
+
+--------------Problem Initialization-----------
+Running with params:
+	 ls_method: 	 substitution 
+	 gmres_mod: 	 native 
+	 K: 			 100 
+	 n: 			 10^5 
+--------------Start IPM Predictor Corrector----
+--------------End IPM Predictor Corrector------
+Time elapsed						=	2.383e+01 sec 
+--------------KKT condtion errors--------------
+ Stationarity (2)					=	1.341e-04
+ Stationarity (inf)					=	1.909e-04
+ Primal Feasibility Equality (2)	=	4.407e-10
+ Primal Feasibility Equality (inf)	=	2.109e-12
+ Primal Feasibility Inequality		=	0
+ Dual Feasibility Inequality		=	0
+ Complementary Slackness (max)		=	5.748e-08
+ Complementary Slackness (prd)		=	4.036e-06
+
+
+
+--------------Problem Initialization-----------
+Running with params:
+	 ls_method: 	 substitution 
+	 gmres_mod: 	 native 
+	 K: 			 500 
+	 n: 			 10^3 
+--------------Start IPM Predictor Corrector----
+--------------End IPM Predictor Corrector------
+Time elapsed						=	1.421e-02 sec 
+--------------KKT condtion errors--------------
+ Stationarity (2)					=	1.255e-02
+ Stationarity (inf)					=	4.458e-02
+ Primal Feasibility Equality (2)	=	3.101e-09
+ Primal Feasibility Equality (inf)	=	1.074e-10
+ Primal Feasibility Inequality		=	0
+ Dual Feasibility Inequality		=	0
+ Complementary Slackness (max)		=	6.292e-08
+ Complementary Slackness (prd)		=	4.801e-07
+
+
+
+--------------Problem Initialization-----------
+Running with params:
+	 ls_method: 	 substitution 
+	 gmres_mod: 	 native 
+	 K: 			 500 
+	 n: 			 10^4 
+--------------Start IPM Predictor Corrector----
+--------------End IPM Predictor Corrector------
+Time elapsed						=	1.510e-01 sec 
+--------------KKT condtion errors--------------
+ Stationarity (2)					=	1.639e-03
+ Stationarity (inf)					=	4.453e-03
+ Primal Feasibility Equality (2)	=	5.576e-12
+ Primal Feasibility Equality (inf)	=	8.287e-14
+ Primal Feasibility Inequality		=	0
+ Dual Feasibility Inequality		=	0
+ Complementary Slackness (max)		=	2.012e-07
+ Complementary Slackness (prd)		=	4.438e-07
+
+
+
+--------------Problem Initialization-----------
+Running with params:
+	 ls_method: 	 substitution 
+	 gmres_mod: 	 native 
+	 K: 			 500 
+	 n: 			 10^5 
+--------------Start IPM Predictor Corrector----
+--------------End IPM Predictor Corrector------
+Time elapsed						=	5.413e+00 sec 
+--------------KKT condtion errors--------------
+ Stationarity (2)					=	6.969e-04
+ Stationarity (inf)					=	9.891e-04
+ Primal Feasibility Equality (2)	=	5.564e-11
+ Primal Feasibility Equality (inf)	=	2.666e-13
+ Primal Feasibility Inequality		=	0
+ Dual Feasibility Inequality		=	0
+ Complementary Slackness (max)		=	1.060e-08
+ Complementary Slackness (prd)		=	2.482e-07
+
+
+

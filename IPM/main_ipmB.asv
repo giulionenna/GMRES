@@ -4,10 +4,25 @@ clc
 
 format short
 
+ls_method_vec =['augmented', 'substitution'];
+gmres_mod_vec = ['v1', 'native', 'none'];
+K_vec = [100, 500];
+n_vec = [3, 4, 5];
+
 fprintf("--------------Problem Initialization-----------\n");
+fprintf("Running with params:\n");
+fprintf("\t ls_method: \t %s \n", ls_method_vec(i));
+ls_method = ls_method_vec(i);
+
+fprintf("\t ls_method: \t %s \n", gmres_mod_vec(j));
+ls_method = ls_method_vec(i);
+
+
+
+
 
 % Initialization of the problem dimensions
-n = 10^5;
+n = 10^4;
 K = 100;
 
 % Definition of the non-convex quadratic objective function
@@ -42,16 +57,17 @@ y0 = ones(2*K+n,1); % y = Ax-b
 lambda0 = ones(2*K+n,1);
 x0 = A\(b+y0); % <- least squares sense
 
-ls_method = 'augmented';
-%ls_method = 'substitution';
 
-gmres_mod = ['v1' ..];
 
 fprintf("--------------Start IPM Predictor Corrector----\n");
 % Predictor-Corrector Interior Point Method
+ls_method = 'augmented';
+gmres_mod = ['none'];
+tic
 [xk, fk, yk, lambdak, muk, k, fkseq, tau_seq] = predictor_corrector_ipm_qp_B(...
     Q, c, A, b, tau, eps, kmax, x0, y0, lambda0, ls_method, gmres_mod);
 fprintf("--------------End IPM Predictor Corrector------\n");
+fprintf("Time elapsed\t\t\t\t\t\t=\t%.3e sec \n", toc)
 %A*xk
 
 % Error check of the KKT conditions
