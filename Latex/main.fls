@@ -1316,6 +1316,12 @@ INPUT c:/texlive/2021/texmf-dist/tex/latex/lm/t1lmtt.fd
 INPUT c:/texlive/2021/texmf-dist/tex/latex/lm/t1lmtt.fd
 INPUT c:/texlive/2021/texmf-dist/tex/latex/lm/t1lmtt.fd
 INPUT c:/texlive/2021/texmf-dist/fonts/tfm/public/lm/ec-lmtt10.tfm
+INPUT ./sections/Sec4_results.tex
+INPUT sections/Sec4_results.tex
+INPUT ./sections/Sec4_results.tex
+INPUT sections/Sec4_results.tex
+INPUT c:/texlive/2021/texmf-dist/fonts/tfm/public/lm/ec-lmtt8.tfm
+INPUT c:/texlive/2021/texmf-dist/fonts/tfm/public/lm/ec-lmtt8.tfm
 INPUT main.aux
 INPUT ./main.out
 INPUT ./main.out

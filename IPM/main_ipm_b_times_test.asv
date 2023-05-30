@@ -4,26 +4,16 @@ clc
 
 format short
 
-ls_method_vec =['augmented', 'substitution'];
-gmres_mod_vec = ['v1', 'native', 'none'];
-K_vec = [100, 500];
-n_vec = [3, 4, 5];
+ls_method = 'augmented'
+gmres_mod = 'v1'
+K = 100
+n_vec = linspace(10^4, 10^5, 10);
 
-fprintf("--------------Problem Initialization-----------\n");
-fprintf("Running with params:\n");
-fprintf("\t ls_method: \t %s \n", ls_method_vec(i));
-ls_method = ls_method_vec(i);
-
-fprintf("\t ls_method: \t %s \n", gmres_mod_vec(j));
-ls_method = ls_method_vec(i);
+for i=1:10
+n = n_vec(i)
 
 
 
-
-
-% Initialization of the problem dimensions
-n = 10^4;
-K = 100;
 
 % Definition of the non-convex quadratic objective function
 c = ones(n,1);
@@ -61,18 +51,15 @@ x0 = A\(b+y0); % <- least squares sense
 
 fprintf("--------------Start IPM Predictor Corrector----\n");
 % Predictor-Corrector Interior Point Method
-ls_method = 'augmented';
-gmres_mod = ['none'];
 tic
 [xk, fk, yk, lambdak, muk, k, fkseq, tau_seq] = predictor_corrector_ipm_qp_B(...
     Q, c, A, b, tau, eps, kmax, x0, y0, lambda0, ls_method, gmres_mod);
-fprintf("--------------End IPM Predictor Corrector------\n");
-fprintf("Time elapsed\t\t\t\t\t\t=\t%.3e sec \n", toc)
+times_vec(i) = toc;
 %A*xk
 
 % Error check of the KKT conditions
 kkt1_err_linf = norm(Q*xk + c - A'*lambdak, inf);
-kkt1_err_l2 = norm(Q*xk + c - A'*lambdak , 2);
+kkt1_err_l2(i) = norm(Q*xk + c - A'*lambdak , 2);
 
 kkt2_err_linf = norm(A*xk-b-yk, inf);
 kkt2_err_l2 = norm(A*xk-b-yk, 2);
@@ -85,16 +72,35 @@ kkt4_ineq_s = any(lambdak < 0);
 
 fprintf("--------------KKT condtion errors--------------\n");
 fprintf(" Stationarity (2)\t\t\t\t\t=\t%.3e\n", kkt1_err_linf);
-fprintf(" Stationarity (inf)\t\t\t\t\t=\t%.3e\n", kkt1_err_l2);
+fprintf(" Stationarity (inf)\t\t\t\t\t=\t%.3e\n", kkt1_err_l2(i));
 fprintf(" Primal Feasibility Equality (2)\t=\t%.3e\n", kkt2_err_l2);
 fprintf(" Primal Feasibility Equality (inf)\t=\t%.3e\n", kkt2_err_linf);
 fprintf(" Primal Feasibility Inequality\t\t=\t%d\n", kkt4_ineq_x);
 fprintf(" Dual Feasibility Inequality\t\t=\t%d\n", kkt4_ineq_s);
-fprintf(" Complementary Slackness (max)\t\t=\t%.3e\n", kkt3_max_err);
-fprintf(" Complementary Slackness (prd)\t\t=\t%.3e\n", kkt3_prod);
+fprintf( " Complementary Slackness (max)\t\t=\t%.3e\n", kkt3_max_err);
+fprintf(" Complementary Slackness (prd)\t\t=\t%.3e\n\n\n\n", kkt3_prod);
 
-save("ipm_qp_results.mat")
+%save("ipm_qp_results.mat")
+end
 
+
+yyaxis left
+p1 = plot(1:10, times_vec, 'linewidth', 2, 'markersize', 3); hold on
+title("Times and accuracy", 'interpreter', 'latex', 'FontSize', 14)
+xticks(1:10)
+%yticks(1:N+1)
+%xticklabels(n_vec)
+xticklabels(compose("%d*10^4", 1:10));
+xlabel('$n$', 'interpreter', 'latex')
+%ylabel('$[s]$', 'Interpreter','latex')
+
+yyaxis right
+p2 = semilogy(1:10, kkt1_err_l2,'linewidth', 2)
+
+%semilogy(1:dmax, smooth(r_sim),'-', 'linewidth', 2)
+%ylabel('KKT err $l_2$', 'Interpreter','latex', 'Rotation',45)
+legend([p1, p2], {'Time $[s]$', 'Stationarity error $l_2$ norm'}, 'Location', 'northwest', 'Interpreter','latex')
+grid on
 
 
 

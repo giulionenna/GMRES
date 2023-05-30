@@ -1,6 +1,6 @@
 # Fdb version 3
-["pdflatex"] 1685371007 "c:/Users/giuli/Documents/GitHub/GMRES/Latex/main.tex" "main.pdf" "main" 1685371009
-  "c:/Users/giuli/Documents/GitHub/GMRES/Latex/main.tex" 1685356859 6161 03876f3271cfbc72ac47229fa71d9e90 ""
+["pdflatex"] 1685444406 "c:/Users/giuli/Documents/GitHub/GMRES/Latex/main.tex" "main.pdf" "main" 1685444408
+  "c:/Users/giuli/Documents/GitHub/GMRES/Latex/main.tex" 1685438145 6241 bfa199c6ba5974593ccb655495ff640b ""
   "c:/texlive/2021/texmf-dist/fonts/enc/dvips/lm/lm-ec.enc" 1625390054 2375 baa924870cfb487815765f9094cf3728 ""
   "c:/texlive/2021/texmf-dist/fonts/enc/dvips/lm/lm-mathex.enc" 1625390054 3486 c7eadf5dcc57b3b2d11736679f6636ba ""
   "c:/texlive/2021/texmf-dist/fonts/enc/dvips/lm/lm-mathit.enc" 1625390054 2405 5dcf2c1b967ee25cc46c58cd52244aed ""
@@ -50,6 +50,7 @@
   "c:/texlive/2021/texmf-dist/fonts/tfm/public/lm/ec-lmr8.tfm" 1625390054 12064 9b9ade9f64cb32ce1d9a88d21fbd5c2d ""
   "c:/texlive/2021/texmf-dist/fonts/tfm/public/lm/ec-lmri10.tfm" 1625390054 17148 9556e1b5f936b77a796f68d2d559ba99 ""
   "c:/texlive/2021/texmf-dist/fonts/tfm/public/lm/ec-lmtt10.tfm" 1625390054 1372 2ef2c2b492b3c4cd7879fe083abbb061 ""
+  "c:/texlive/2021/texmf-dist/fonts/tfm/public/lm/ec-lmtt8.tfm" 1625390054 1380 64228d979098ac090aa3f98d5aa8ad3e ""
   "c:/texlive/2021/texmf-dist/fonts/tfm/public/lm/lmex10.tfm" 1625390054 992 ce925c9346c7613270a79afbee98c070 ""
   "c:/texlive/2021/texmf-dist/fonts/tfm/public/lm/lmmi10.tfm" 1625390054 1528 6d36b2385e0ca062a654de6ac59cb34f ""
   "c:/texlive/2021/texmf-dist/fonts/tfm/public/lm/lmmi12.tfm" 1625390054 1524 753b192b18f2991794f9d41a8228510b ""
@@ -238,13 +239,14 @@
   "c:/texlive/2021/texmf-var/fonts/map/pdftex/updmap/pdftex.map" 1625392553 5227234 8169b85b11be64e0073b5aa9f9ec0c16 ""
   "c:/texlive/2021/texmf-var/web2c/pdftex/pdflatex.fmt" 1625392615 2814096 c2f185a324c4ab89ca2e6b7dc489b24b ""
   "c:/texlive/2021/texmf.cnf" 1625392530 713 e69b156964470283e0530f5060668171 ""
-  "main.aux" 1685371009 2414 fee68eeecc2f57134a5911fcd4ea834f "pdflatex"
-  "main.out" 1685371009 493 f7768116cbc7e435859a756b8b763951 "pdflatex"
-  "main.tex" 1685356859 6161 03876f3271cfbc72ac47229fa71d9e90 ""
+  "main.aux" 1685444408 2709 b41f5c2c434a95f8c9a22346219d9d63 "pdflatex"
+  "main.out" 1685444408 709 93038e97649a7288191d8e981bd81201 "pdflatex"
+  "main.tex" 1685438145 6241 bfa199c6ba5974593ccb655495ff640b ""
   "sections/Sec1_setting.tex" 1685356691 3796 d4e4829ed2c60588b8f3941992f8b6cc ""
-  "sections/Sec2_IPM.tex" 1685371004 12333 18e65d07fd5b11684949b06636ebd136 ""
+  "sections/Sec2_IPM.tex" 1685444240 12348 9d5d26fc9891ce0a483e3365fd427276 ""
+  "sections/Sec4_results.tex" 1685444406 3684 ffb58632834827a821c1eb24abf11821 ""
   (generated)
   "main.out"
-  "main.aux"
   "main.pdf"
   "main.log"
+  "main.aux"
