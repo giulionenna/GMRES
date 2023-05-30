@@ -51,7 +51,7 @@ Ultimately, the problem will be solved in the more general formulation \ref{Sec2
 
 In the following table computational times are shown comparing our implementation of the GMRES algorithm with the native implementation in MATLAB.
 {\begin{center}
-    \begin{tabular}{|l|c|c|c|r|}
+    \begin{tabular}{|l|c|c|c|r|} 
      \hline Dimensions & L.S. Formulation &Time $[s]$ Native & Time $[s]$ Our GMRES \\
        \hline    
        $ n=10^4$, $K=100$ & Aug & $ 0.561$ &$0.439$  \\
@@ -70,5 +70,20 @@ In the following table computational times are shown comparing our implementatio
        \hline
        $ n=10^5$, $K=500$ & Sus & $ 5.413$ &$5.601$  \\
        \hline
+
   \end{tabular}
+  
 \end{center}}
+
+As it is visible in the table above, performing the algorithm using the \ref{sec2_eq_augmented} formulation of the linear systems performs much quicker the majority of times. Let's investigate how the computation times scale with the dimension of the problem, fixing the value \(K=100\) and solving the \ref{sec2_eq_augmented} formulation.
+
+\begin{figure}[H]
+    \centering
+    \subfloat[1][Native GMRES algorithm]{\includegraphics[scale = 0.45]{pictures/augmented_native.pdf}}
+    \subfloat[2][Our GMRES implementation]{\includegraphics[scale = 0.45]{pictures/augmented_v1.pdf}}
+    \caption{Time and stationarity error of the IPM algorithm using the native GMRES function implemented in MATLAB and our implementation shown for different values of \(n\).}
+    \label{time_accuracy}
+  \end{figure}
+
+\noindent In \ref{time_accuracy} we can see that both computational time and accuracy of the method scale roughly linearly with the dimension of the problem. As a measure of accuracy we used the error on the stationarity condition as defined in \ref{Sec1_Eq_kkt_after}, in particular:
+\[ \| Qx + c - \hat{A}^T \hat{\lambda} \| _ 2\]

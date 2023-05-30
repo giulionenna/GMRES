@@ -4,10 +4,10 @@ clc
 
 format short
 
-ls_method = 'augmented'
+ls_method = 'substitution'
 gmres_mod = 'v1'
 K = 100
-n_vec = linspace(10^4, 10^5, 10);
+n_vec = linspace(10^5, 10^6, 10);
 
 for i=1:10
 n = n_vec(i)
@@ -45,7 +45,9 @@ kmax = 100;
 % Definition of the initial condition (satisfying the KKT conditions)
 y0 = ones(2*K+n,1); % y = Ax-b
 lambda0 = ones(2*K+n,1);
-x0 = A\(b+y0); % <- least squares sense
+%x0 = A\ (b+y0);
+x0 = rand(n, 1);
+% <- least squares sense
 
 
 
@@ -83,14 +85,14 @@ fprintf(" Complementary Slackness (prd)\t\t=\t%.3e\n\n\n\n", kkt3_prod);
 %save("ipm_qp_results.mat")
 end
 
-
+fig = figure; 
 yyaxis left
 p1 = plot(1:10, times_vec, 'linewidth', 2, 'markersize', 3); hold on
-title("Times and accuracy", 'interpreter', 'latex', 'FontSize', 14)
+%title("Times and accuracy", 'interpreter', 'latex', 'FontSize', 14)
 xticks(1:10)
 %yticks(1:N+1)
 %xticklabels(n_vec)
-xticklabels(compose("%d*10^4", 1:10));
+xticklabels(compose("%d*10^5", 1:10));
 xlabel('$n$', 'interpreter', 'latex')
 %ylabel('$[s]$', 'Interpreter','latex')
 
@@ -101,6 +103,10 @@ p2 = semilogy(1:10, kkt1_err_l2,'linewidth', 2)
 %ylabel('KKT err $l_2$', 'Interpreter','latex', 'Rotation',45)
 legend([p1, p2], {'Time $[s]$', 'Stationarity error $l_2$ norm'}, 'Location', 'northwest', 'Interpreter','latex')
 grid on
+set(fig,'PaperSize',[16 11]);
+print(fig, 'Latex\pictures\substitution_v1.pdf', '-dpdf')
+
+
 
 
 

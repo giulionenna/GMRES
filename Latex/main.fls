@@ -1322,6 +1322,16 @@ INPUT ./sections/Sec4_results.tex
 INPUT sections/Sec4_results.tex
 INPUT c:/texlive/2021/texmf-dist/fonts/tfm/public/lm/ec-lmtt8.tfm
 INPUT c:/texlive/2021/texmf-dist/fonts/tfm/public/lm/ec-lmtt8.tfm
+INPUT ./pictures/augmented_native.pdf
+INPUT ./pictures/augmented_native.pdf
+INPUT pictures/augmented_native.pdf
+INPUT ./pictures/augmented_native.pdf
+INPUT ./pictures/augmented_native.pdf
+INPUT ./pictures/augmented_v1.pdf
+INPUT ./pictures/augmented_v1.pdf
+INPUT pictures/augmented_v1.pdf
+INPUT ./pictures/augmented_v1.pdf
+INPUT ./pictures/augmented_v1.pdf
 INPUT main.aux
 INPUT ./main.out
 INPUT ./main.out
