@@ -1,4 +1,4 @@
-function [xk, fk, yk, lambdak, mu_seq, k, fkseq, tau_seq, res, res_2, flag_1, flag_2] = predictor_corrector_ipm_qp_B(...
+function [xk, fk, yk, lambdak, muk, k, fkseq, tau_seq, res, res_2, flag_1, flag_2] = predictor_corrector_ipm_qp_B(...
     Q, c, A, b, tau, eps, kmax, x0, y0, lambda0, ls_method, gmres_mod)
 %% Initialization of the method
 [m, n] = size(A);
@@ -34,7 +34,7 @@ for k = 1:kmax
             if strcmp(gmres_mod, 'native')
                 Delta_augmented = gmres(K, rtilde, [], 1.0e-6, 20);
             elseif strcmp(gmres_mod, 'v1')
-                [Delta_augmented, res(k), flag_1(k)]= gmres_v1(K, rtilde, zeros(length(rtilde), 1), 1e-6, 30);
+                [Delta_augmented, res(k), flag_1(k)]= gmres_v1(K, rtilde, zeros(length(rtilde), 1), 1e-6, 20);
             elseif strcmp(gmres_mod, 'none')
                  Delta_augmented = K\rtilde;
             elseif strcmp(gmres_mod, 'lanczos')
@@ -95,7 +95,7 @@ for k = 1:kmax
             if strcmp(gmres_mod, 'native')
                 Delta_augmented = gmres(K, rtilde, [], 1.0e-6, 20);
             elseif strcmp(gmres_mod, 'v1')
-                [Delta_augmented, res_2(k), flag_2(k)]= gmres_v1(K, rtilde, zeros(length(rtilde), 1), 1e-6, 30);
+                [Delta_augmented, res_2(k)]= gmres_v1(K, rtilde, zeros(length(rtilde), 1), 1e-6, 20);
             elseif strcmp(gmres_mod,'lanczos')
                 Delta_augmented = d_lanczos(K, rtilde, zeros(length(rtilde), 1), 1e-6, 20);
             elseif strcmp(gmres_mod, 'none')

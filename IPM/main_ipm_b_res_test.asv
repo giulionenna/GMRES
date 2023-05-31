@@ -7,10 +7,7 @@ format short
 ls_method = 'augmented'
 gmres_mod = 'v1'
 K = 100
-n_vec = linspace(10^5, 10^5, 10);
-
-for i=1:10
-n = n_vec(i)
+n = 10^6
 
 
 
@@ -54,14 +51,14 @@ x0 = rand(n, 1);
 fprintf("--------------Start IPM Predictor Corrector----\n");
 % Predictor-Corrector Interior Point Method
 tic
-[xk, fk, yk, lambdak, muk, k, fkseq, tau_seq, res_1, res_2] = predictor_corrector_ipm_qp_B(...
+[xk, fk, yk, lambdak, mu_seq, k, fkseq, tau_seq, res_1, res_2, flag_1, flag_2] = predictor_corrector_ipm_qp_B(...
     Q, c, A, b, tau, eps, kmax, x0, y0, lambda0, ls_method, gmres_mod);
-times_vec(i) = toc;
+times_vec = toc;
 %A*xk
 
 % Error check of the KKT conditions
 kkt1_err_linf = norm(Q*xk + c - A'*lambdak, inf);
-kkt1_err_l2(i) = norm(Q*xk + c - A'*lambdak , 2);
+kkt1_err_l2 = norm(Q*xk + c - A'*lambdak , 2);
 
 kkt2_err_linf = norm(A*xk-b-yk, inf);
 kkt2_err_l2 = norm(A*xk-b-yk, 2);
@@ -74,7 +71,7 @@ kkt4_ineq_s = any(lambdak < 0);
 
 fprintf("--------------KKT condtion errors--------------\n");
 fprintf(" Stationarity (2)\t\t\t\t\t=\t%.3e\n", kkt1_err_linf);
-fprintf(" Stationarity (inf)\t\t\t\t\t=\t%.3e\n", kkt1_err_l2(i));
+fprintf(" Stationarity (inf)\t\t\t\t\t=\t%.3e\n", kkt1_err_l2);
 fprintf(" Primal Feasibility Equality (2)\t=\t%.3e\n", kkt2_err_l2);
 fprintf(" Primal Feasibility Equality (inf)\t=\t%.3e\n", kkt2_err_linf);
 fprintf(" Primal Feasibility Inequality\t\t=\t%d\n", kkt4_ineq_x);
@@ -83,26 +80,24 @@ fprintf( " Complementary Slackness (max)\t\t=\t%.3e\n", kkt3_max_err);
 fprintf(" Complementary Slackness (prd)\t\t=\t%.3e\n\n\n\n", kkt3_prod);
 
 
-%save("ipm_qp_results.mat")
-end
+
 
 fig = figure; 
-yyaxis left
-p1 = plot(1:10, times_vec, 'linewidth', 2, 'markersize', 3); hold on
+p1 = plot(1:k, res_1, 'linewidth', 2, 'markersize', 3); hold on
 %title("Times and accuracy", 'interpreter', 'latex', 'FontSize', 14)
-xticks(1:10)
+xticks(1:k)
 %yticks(1:N+1)
 %xticklabels(n_vec)
-xticklabels(compose("%d*10^5", 1:10));
-xlabel('$n$', 'interpreter', 'latex')
-%ylabel('$[s]$', 'Interpreter','latex')
+%xticklabels(compose("%d*10^5", 1:10));
+xlabel('Iteration', 'interpreter', 'latex')
+ylabel('Residual (abs)', 'Interpreter','latex')
 
-yyaxis right
-p2 = semilogy(1:10, kkt1_err_l2,'linewidth', 2)
+p2 = plot(1:k, res_2, 'linewidth', 2, 'LineStyle','--');
+p3 = plot(1:k, mu_seq)
 
 %semilogy(1:dmax, smooth(r_sim),'-', 'linewidth', 2)
 %ylabel('KKT err $l_2$', 'Interpreter','latex', 'Rotation',45)
-legend([p1, p2], {'Time $[s]$', 'Stationarity error $l_2$ norm'}, 'Location', 'northwest', 'Interpreter','latex')
+legend([p1, p2], {'Residual 1', 'Residual 2'}, 'Interpreter','latex')
 grid on
 set(fig,'PaperSize',[16 11]);
 %print(fig, 'Latex\pictures\substitution_v1.pdf', '-dpdf')

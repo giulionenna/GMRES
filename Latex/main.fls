@@ -1332,6 +1332,11 @@ INPUT ./pictures/augmented_v1.pdf
 INPUT pictures/augmented_v1.pdf
 INPUT ./pictures/augmented_v1.pdf
 INPUT ./pictures/augmented_v1.pdf
+INPUT ./pictures/res_vs_duality.pdf
+INPUT ./pictures/res_vs_duality.pdf
+INPUT pictures/res_vs_duality.pdf
+INPUT ./pictures/res_vs_duality.pdf
+INPUT ./pictures/res_vs_duality.pdf
 INPUT main.aux
 INPUT ./main.out
 INPUT ./main.out

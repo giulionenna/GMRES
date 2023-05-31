@@ -1,5 +1,5 @@
 # Fdb version 3
-["pdflatex"] 1685456953 "c:/Users/giuli/Documents/GitHub/GMRES/Latex/main.tex" "main.pdf" "main" 1685456955
+["pdflatex"] 1685556223 "c:/Users/giuli/Documents/GitHub/GMRES/Latex/main.tex" "main.pdf" "main" 1685556225
   "c:/Users/giuli/Documents/GitHub/GMRES/Latex/main.tex" 1685438145 6241 bfa199c6ba5974593ccb655495ff640b ""
   "c:/texlive/2021/texmf-dist/fonts/enc/dvips/lm/lm-ec.enc" 1625390054 2375 baa924870cfb487815765f9094cf3728 ""
   "c:/texlive/2021/texmf-dist/fonts/enc/dvips/lm/lm-mathex.enc" 1625390054 3486 c7eadf5dcc57b3b2d11736679f6636ba ""
@@ -239,16 +239,17 @@
   "c:/texlive/2021/texmf-var/fonts/map/pdftex/updmap/pdftex.map" 1625392553 5227234 8169b85b11be64e0073b5aa9f9ec0c16 ""
   "c:/texlive/2021/texmf-var/web2c/pdftex/pdflatex.fmt" 1625392615 2814096 c2f185a324c4ab89ca2e6b7dc489b24b ""
   "c:/texlive/2021/texmf.cnf" 1625392530 713 e69b156964470283e0530f5060668171 ""
-  "main.aux" 1685456954 3527 7f3cd057b255b67fdcfdd5bbf3a47323 "pdflatex"
-  "main.out" 1685456954 709 93038e97649a7288191d8e981bd81201 "pdflatex"
+  "main.aux" 1685556225 3527 eeec147ec09e1951716f06f649e5f0b3 "pdflatex"
+  "main.out" 1685556225 709 93038e97649a7288191d8e981bd81201 "pdflatex"
   "main.tex" 1685438145 6241 bfa199c6ba5974593ccb655495ff640b ""
   "pictures/augmented_native.pdf" 1685455352 22443 0b3c8aecd4fdb1b59a4fa37c2fd8c725 ""
   "pictures/augmented_v1.pdf" 1685455215 22424 a40f4684cb0f6b6c8da6d4ed4878021a ""
+  "pictures/res_vs_duality.pdf" 1685556184 36656 4aeb582882c0cde2de365fa5e8fe4a91 ""
   "sections/Sec1_setting.tex" 1685356691 3796 d4e4829ed2c60588b8f3941992f8b6cc ""
   "sections/Sec2_IPM.tex" 1685444240 12348 9d5d26fc9891ce0a483e3365fd427276 ""
-  "sections/Sec4_results.tex" 1685456952 4837 33eca5ab56f576e8457c9b6597d0775e ""
+  "sections/Sec4_results.tex" 1685556222 6310 723811ee59c778fa0c59bc5d0fcf2de2 ""
   (generated)
-  "main.aux"
-  "main.out"
-  "main.pdf"
   "main.log"
+  "main.aux"
+  "main.pdf"
+  "main.out"

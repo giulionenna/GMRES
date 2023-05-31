@@ -87,3 +87,13 @@ As it is visible in the table above, performing the algorithm using the \ref{sec
 
 \noindent In \ref{time_accuracy} we can see that both computational time and accuracy of the method scale roughly linearly with the dimension of the problem. As a measure of accuracy we used the error on the stationarity condition as defined in \ref{Sec1_Eq_kkt_after}, in particular:
 \[ \| Qx + c - \hat{A}^T \hat{\lambda} \| _ 2\]
+
+\noindent A very important note is the fact that using an iterative linear system solver is \textbf{the only way to perform IPM at large scale}. We tried to solve the linear systems involved in the IPM iterations using the \textit{Backslash operator} in MATLAB (which is the standard operator to solve linear systems) but this resulted in \textbf{failing the test} when the dimension of the problem approaches \(n \sim 10^5\). Not only computational times are much higher (\(\sim 1\)min for the backslash versus \(\sim 1\)sec for the GMRES when \(n \sim 10^5\) ) but the backslash operator cannot handle the dimension of the linear system returning \texttt{NaN} as results. This could be due to the conditioning of the matrices and the lack of enough RAM memory in the system.
+\\
+\\
+\noindent The fact that we can solve such algorithm with enough accuracy only by using an iterative linear system solver is made possible because the solution of the linear systems at each iteration does not need to be much accurate itself. The GMRES algorithm in fact stops without reaching the desired tolerance most of the time, but this is not a problem for the accuracy of the final solution. Moreover, since the maximum iterations of the GMRES algorithm are fixed, bad conditioning of the matrix does not affect computational times unlike  with the backslash operator.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale = 0.8]{pictures/res_vs_duality.pdf}
+\end{figure}
