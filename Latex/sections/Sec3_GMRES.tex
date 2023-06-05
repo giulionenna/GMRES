@@ -1,0 +1,51 @@
+The Generalized Minimal RESiduals (GMRES) method is an iterative approach that utilizes Krylov subspaces to transform a high-dimensional problem into a series of smaller dimensional problems.  It is commonly used to solve linear systems of the form $Ax = b$, where $A$ is an invertible $n \times n$ matrix and $b$ is a vector of length $n$.
+GMRES starts with an initial guess for the solution $x_0$ and constructs a sequence of approximations $x_0, x_1, x_2, \ldots$ that converge to the true solution.
+
+%Given the initial residual $r_0 = b-Ax_0$, it finds the best approximation of the true solution $x_m$ within a Krylov subspace, spanned by the vectors $A$ and $r_0$.
+%is given by $$ K_m(A, r_0) = span(r_0, Ar_0, A^2r_0, \ldots, A^{m-1}r_0).$$
+
+Instead of solving the system $Ax = b$ directly, GMRES uses least squares to find $x_m \in K_m$, where $K_m(A, r_0)$ is the Krylov subspace of dimension $m$ and $x_m$ minimizes the residual $r_m = \|b - Ax_m\|_2$, iteratively improving the solution and reducing the residual. This way, GMRES gradually converges towards the true solution of the linear system. The convergence criterion is typically based on the norm of the residual, and the algorithm terminates when the residual falls below a certain threshold or after a specified number of iterations. In many situations, this happens when $m$ is much smaller than $n$.
+
+The GMRES algorithm uses the Arnoldi iteration with Gram-Schmidt orthonormalization to generate an orthonormal basis for the Krylov subspace.
+Given a generic Krylov subspace $\mathbb{K}_m(A, v_1)$, with $v_1$ nonvanishing vector of norm 1, the Arnoldi's procedure allows to build an orthonormal basis of $\mathbb{K}_m$, producing the two key matrices $V_m$, the $(m+1) \times m$ matrix with column vectors $v_1, v_2, \ldots, v_m$ and $\bar{H}_m$, a $(m+1) \times m$ upper Hessenberg matrix. The relations $AV_m = V_{m+1} \bar{H}_m $ and $V_m^TAV_m = H_m$ holds true, $H_m$ obtained by deleting the last row from $\bar{H}_m$. 
+The solution at iteration $m$ is obtained by $x_m = x_0 + V_my_m$ for some $y_m \in \mathbb{R}^m$. In particular, the vector of coefficients $y_m$ is obtained in order to minimize the euclidean norm of the residual 
+\begin{align*}
+r_m = b - Ax_m &= b - A (x_0 + V_m y_m) = \\
+&= b - Ax_0 - AV_my_m =\\
+&= r_0 - V_{m+1}\bar{H} y_m =\\
+&= \beta v_1 - V_{m+1}\bar{H} y_m.
+\end{align*}
+
+The orthogonality condition $r_m \perp \mathit{L}=A\mathit{K}_m(A,r_0)$ allows to derive the following equality  
+\begin{equation}
+    (AV_m)^T(V_{m+1}(\beta v_1 - V_{m+1}\bar{H} y_m) = 0
+\end{equation}
+\begin{equation}
+    \bar{H}_m^T \beta e_1 = \bar{H}_m^T \bar{H}_m y_m. 
+\end{equation}
+Since solving this linear system would be computationally inefficient, the same condition is obtained by minimizing the objective function $$J(y) = \|r_m\|_2^2 = \|b - Ax_m\|_2^2.$$ Thus the problem of finding the $y_m$ coefficients is a least square errors problem of dimensions $m+1$: \begin{equation}
+    y_m = \arg\min_{y \in \mathbb{R}^m} \|\beta e_1 - \bar{H}_m y\|_2.
+\end{equation}
+
+To find the solution of the least square problems means to find the QR factorization of the matrix $\bar{H}_m$, i.e. $\bar{H}_m = Q_m^T \bar{R}_m$ where $Q_m \in \mathbb{R}^{(m+1) \times (m+1) }$ is an orthogonal matrix and $\bar{R}_m  \in \mathbb{R}^{(m+1) \times m} $. The minimizing problem can be rewritten as 
+\begin{equation}\label{eq:leastsquaresolver}
+\begin{aligned}
+    \|\beta e_1 - \bar{H}_m y\|_2 &= \|\beta e_1 - Q_m^T \bar{R}_m y\|_2 \\
+    &= \|Q_m^T Q_m \beta e_1 - Q_m^T \bar{R}_m y\|_2 \\
+    &= \|Q_m^T (Q_m \beta e_1 - \bar{R}_m y)\|_2 \\
+    &= \|\bar{g}_m - \bar{R}_m y\|_2.
+\end{aligned}
+\end{equation}
+
+\noindent Here the $\bar{g}_m$ vector is given by $\bar{g}_m = Q_m\beta e_1 = \begin{bmatrix}
+\gamma_1 \\
+\gamma_2 \\
+\vdots \\
+\gamma_{m+1} \\
+\end{bmatrix} $.\\
+
+\noindent As a result, the vector $y_m$ is therefore obtained by \begin{equation}
+    y_m = R_m^{-1} g_m
+\end{equation}
+where $R_m$ is $m \times m$ upper triangular matrix obtained by deleting the $(m+1)-th$ row of $\bar{R}_m$ and $g_m$ is the $m-dimensional$ vector given by the first $m$ rows of $\bar{g}_m$. Moreover, the $r_m$ vector, at iteration $m$ is given by $$b - Ax_m = V_{m+1}(\beta e_1 - \bar{H}_my_m)= V_{m+1}Q_m^T(\gamma_{m+1} e_{m+1} ) 
+$$ and $$\|b - Ax_m \| = |\gamma_{m+1}|. $$
