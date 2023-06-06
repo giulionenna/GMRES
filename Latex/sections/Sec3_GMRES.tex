@@ -48,4 +48,47 @@ To find the solution of the least square problems means to find the QR factoriza
     y_m = R_m^{-1} g_m
 \end{equation}
 where $R_m$ is $m \times m$ upper triangular matrix obtained by deleting the $(m+1)-th$ row of $\bar{R}_m$ and $g_m$ is the $m-dimensional$ vector given by the first $m$ rows of $\bar{g}_m$. Moreover, the $r_m$ vector, at iteration $m$ is given by $$b - Ax_m = V_{m+1}(\beta e_1 - \bar{H}_my_m)= V_{m+1}Q_m^T(\gamma_{m+1} e_{m+1} ) 
-$$ and $$\|b - Ax_m \| = |\gamma_{m+1}|. $$
+$$ and 
+\begin{equation} \label{eq_gmres_residual}
+    \|b - Ax_m \| = |\gamma_{m+1}|.  
+\end{equation}
+
+\begin{algorithm}\caption{GMRES with \textit{On-the-fly} QR factorization }
+    \label{algo:GMRES}
+    \begin{algorithmic}
+    \State \textbf{Input:} \(A\), \(b\), \(x_0\), \(\texttt{tol}\), \texttt{maxiter}
+     \State \(r_0 \gets b-Ax_0, \quad \texttt{res} \gets \|r_0\|_2, \quad v_1 \gets r_0 / \texttt{res} \quad V\gets v_1\) 
+     \State \(\bar{R} \gets (Av_1)^T v_1, \quad Q \gets 1\) \Comment{Factorization matrices initialization}
+     \State \(m \gets 1\)
+     \While{ \(\texttt{res}/b \leq \texttt{tol}\) and \( m-1 \leq \texttt{maxiter}\)}
+     \State \(\omega_m = A v_m\) \Comment{Initialize new basis vector for Krilov Space}
+     \For{\(j = 1, \dots, m\)} \Comment{Orthogonalization through GS}
+     \State \(h_{j,m} \gets \langle \omega_m, v_j \rangle\)
+     \State \(\omega_m \gets h_{j,m}v_j\)
+     \EndFor
+     \State \(h_{m+1, m} \gets \| \omega_m \|\)
+     \If{\(h_{m+1, m} = 0\)} \Comment{Check if max dimension of basis is reached}
+     \State \textbf{Break}
+     \EndIf
+     \State \(v_{m+1} \gets \omega_m / h_{m+1, m}\)
+     \State Append \(v_m\) as last column of \(V\)
+     \State \(h \gets [h_{1, m}, h_{2,m}, ... , h_{m+1, m}]^T\) \Comment{New column of \(H\) to be factorized}
+     \State Augment \(Q\) by 1
+     \State Increase size of \(\bar{R}\) by 1 (with zeros)
+     \State Append \(Qh\) as last column of \(\bar{R}\)
+     \State \(G \gets\) Givens rotation to cancel \(\bar{R}_{m+1, m}\) 
+     \State \(\bar{R} \gets G \bar{R}\) \Comment{rotate to cancel unwanted element under diagonal}
+     \State \(Q \gets GQ\) \Comment{Save the rotation}
+     \State \(\bar{g} \gets [\bar{g}, 0]^T\)
+     \State \(\bar{g} \gets G \bar{g}\)
+     \State \(\texttt{res} \gets \bar{g}(\texttt{end})\)
+     \State \(m \gets m+1\)
+     \EndWhile
+     \State \(R \gets \bar{R}(1:\texttt{end}-1, :)\)
+     \State \(g \gets \bar{g}(1:\texttt{end}-1)\)
+     \State \(y = R^{-1}g\) \Comment{it's a triangular system}
+     \State \Return \(\tilde{x} = x_0 + Vy\)
+    \end{algorithmic}            
+  \end{algorithm}
+
+
