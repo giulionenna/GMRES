@@ -1,13 +1,24 @@
 The Generalized Minimal RESiduals (GMRES) method is an iterative approach that utilizes Krylov subspaces to transform a high-dimensional problem into a series of smaller dimensional problems.  It is commonly used to solve linear systems of the form $Ax = b$, where $A$ is an invertible $n \times n$ matrix and $b$ is a vector of length $n$.
-GMRES starts with an initial guess for the solution $x_0$ and constructs a sequence of approximations $x_0, x_1, x_2, \ldots$ that converge to the true solution.
-
+GMRES starts with an initial guess for the solution $x_0$ and constructs a sequence of approximations $x_0, x_1, x_2, \ldots$ that converge to the true solution. \\
+\\
 %Given the initial residual $r_0 = b-Ax_0$, it finds the best approximation of the true solution $x_m$ within a Krylov subspace, spanned by the vectors $A$ and $r_0$.
 %is given by $$ K_m(A, r_0) = span(r_0, Ar_0, A^2r_0, \ldots, A^{m-1}r_0).$$
-
-Instead of solving the system $Ax = b$ directly, GMRES uses least squares to find $x_m \in K_m$, where $K_m(A, r_0)$ is the Krylov subspace of dimension $m$ and $x_m$ minimizes the residual $r_m = \|b - Ax_m\|_2$, iteratively improving the solution and reducing the residual. This way, GMRES gradually converges towards the true solution of the linear system. The convergence criterion is typically based on the norm of the residual, and the algorithm terminates when the residual falls below a certain threshold or after a specified number of iterations. In many situations, this happens when $m$ is much smaller than $n$.
+Instead of solving the system $Ax = b$ directly, GMRES  finds an approximation of the solution $x_m \in \mathcal{K}_m(A,r_0)$, where $\mathcal{K}_m(A, r_0)$ is the Krylov subspace of dimension $m$. Moreover $x_m$ minimizes the residual $r_m = \|b - Ax_m\|_2$, iteratively improving the solution and reducing the residual.\\
+\\
+Hence the GMRES algorithm searches for the solution in a particular space called \textbf{Krilov Space}, where
+\begin{equation*}
+    \mathcal{K}_m(A, r_0) = \text{span}(r_0, Ar_0, A^2 r_0, ... , A^{m-1}r_0) 
+\end{equation*}
+We use Krilov spaces to find the approximation of the solution since, thanks to the Cayley-Hamilton theorem, we know that the inverse of a matrix can be represented as a polynomial of such matrix:
+\begin{equation*}
+    A^{-1} = - \frac{1}{c_0} (A^{n-1} + c_{n-1}A^{n-2}+ ... + c_1I)
+\end{equation*}
+This property tells us that \(\bar{x} = A^{-1}b\) can be approximated by a linear combination of basis vectors of the Krylov space, in particular if \(x_0 = 0\), \(r_0 = b\) and \(\mathcal{K}_m(A, r_0) = \mathcal{K}_m(A, b)\) then \(\bar{x} \sim x_m \in \mathcal{K}_m(A, r_0)\) with \(m < n\). \\
+\\
+This way, GMRES gradually converges towards the true solution of the linear system. The convergence criterion is typically based on the norm of the residual, and the algorithm terminates when the residual falls below a certain threshold or after a specified number of iterations. In many situations, this happens when $m$ is much smaller than $n$.
 
 The GMRES algorithm uses the Arnoldi iteration with Gram-Schmidt orthonormalization to generate an orthonormal basis for the Krylov subspace.
-Given a generic Krylov subspace $\mathbb{K}_m(A, v_1)$, with $v_1$ nonvanishing vector of norm 1, the Arnoldi's procedure allows to build an orthonormal basis of $\mathbb{K}_m$, producing the two key matrices $V_m$, the $(m+1) \times m$ matrix with column vectors $v_1, v_2, \ldots, v_m$ and $\bar{H}_m$, a $(m+1) \times m$ upper Hessenberg matrix. The relations $AV_m = V_{m+1} \bar{H}_m $ and $V_m^TAV_m = H_m$ holds true, $H_m$ obtained by deleting the last row from $\bar{H}_m$. 
+Given a generic Krylov subspace $\mathbb{K}_m(A, v_1)$, with $v_1$ nonvanishing vector of norm 1, the Arnoldi's procedure allows to build an orthonormal basis of $\mathbb{K}_m$, producing the two key matrices $V_m$, the $(n) \times m$ matrix with column vectors $v_1, v_2, \ldots, v_m$ and $\bar{H}_m$, a $(m+1) \times m$ upper Hessenberg matrix. The relations $AV_m = V_{m+1} \bar{H}_m $ and $V_m^TAV_m = H_m$ holds true, $H_m$ obtained by deleting the last row from $\bar{H}_m$. 
 The solution at iteration $m$ is obtained by $x_m = x_0 + V_my_m$ for some $y_m \in \mathbb{R}^m$. In particular, the vector of coefficients $y_m$ is obtained in order to minimize the euclidean norm of the residual 
 \begin{align*}
 r_m = b - Ax_m &= b - A (x_0 + V_m y_m) = \\
@@ -52,6 +63,8 @@ $$ and
 \begin{equation} \label{eq_gmres_residual}
     \|b - Ax_m \| = |\gamma_{m+1}|.  
 \end{equation}
+
+We have seen that, in order to compute \(y_m\) we need to compute the \(QR\)-factorization of the matrix \(\bar{H}_m\). The matrix \(\bar{H}_m\) is generated iteratively column by column by the Arnoldi alorithm and its dimension is not known until convergence. Is there a way to compute the QR-factorization \textit{on the fly} while the matrix \(\bar{H}_m\) is being constructed? The answer is yes and this is done by computing a Givens Rotation matrix each time a new column of \(\bar{H}_m\) is constructed and then storing it in the \(Q_m\) matrix. The Algorithm below shows a version of the GMRES algorithm that allows us to compute the QR-factorization on the fly. 
 
 \begin{algorithm}\caption{GMRES with \textit{On-the-fly} QR factorization }
     \label{algo:GMRES}
